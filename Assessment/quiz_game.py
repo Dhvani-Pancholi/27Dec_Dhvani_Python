@@ -75,7 +75,7 @@ while True:
                          print("Wrong!")
                      
                      print(f"Your final score is: {score}/{len(quiz_data)}")
-                     qm.cracker(answer,score)
+                     qm.cracker(quiz_data,score)
    elif role == 3:
       break                    
                      
