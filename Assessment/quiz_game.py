@@ -1,13 +1,13 @@
 import quizgame_master as qm
 from quizgame_master import *
-
+import pandas
 
 print("WELCOME TO TOPS QUIZ GAMING CHALLENGE")
 print("""
 select your role:
       1. Quiz master(press 1)
       2. Quiz cracker(press 2)
-      3. Exit Application(Press 3)
+      3. Exit Application(press 3)
       """)
 while True:
    role = int(input("Enter your role: "))
@@ -47,6 +47,8 @@ while True:
                      qm.add_que(questions, options, answers)  
          elif choice == 2:
             qm.view_que(quiz_data)
+            result = pandas.DataFrame(quiz_data)
+            print(result)
          elif choice == 3:
             del_serial_no = (input("Enter the  question to delete:"))
             if del_serial_no in quiz_data:
@@ -73,10 +75,11 @@ while True:
                          score += 1
                        else:
                          print("Wrong!")
-                     
-                     print(f"Your final score is: {score}/{len(quiz_data)}")
                      qm.cracker(quiz_data,score)
+
+                     print(f"Your final score is: {score}/{len(quiz_data)}")
+                    
    elif role == 3:
+      print("Existing the program")
       break                    
-                     
                      

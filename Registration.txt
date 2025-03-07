@@ -1,0 +1,2 @@
+{'raj': {'Email': 'raj@gmail.com', 'Gender': 'male', 'city': 'ottawa', 'State': 'canada', 'Contact_no': '9909560358'}}
+{'raj': {'Email': 'raj@gmail.com', 'Gender': 'male', 'city': 'ottawa', 'State': 'canada', 'Contact_no': '9909560358'}, 'dhvani': {'Email': 'dhvnai@gmial.com', 'Gender': 'female', 'city': 'rjk', 'State': 'guj', 'Contact_no': '9409937584'}}
