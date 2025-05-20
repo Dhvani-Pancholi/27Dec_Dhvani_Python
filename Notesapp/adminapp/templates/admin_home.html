@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 min-h-screen flex items-center justify-center p-6">
+    <div
+        class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-10 text-center transition-transform duration-300 hover:scale-[1.02]">
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-8 tracking-wide">Admin Dashboard</h1>
+
+        <div class="flex flex-col gap-6">
+            <a href="/adminapp/admin_userinfo"
+                class="block w-full py-3 bg-indigo-600 text-white text-lg font-medium rounded-xl shadow-md hover:bg-indigo-700 hover:shadow-lg transition-all duration-300 ease-in-out">
+                👥 View All Users
+            </a>
+            <a href="/adminapp/admin_notesinfo"
+                class="block w-full py-3 bg-fuchsia-600 text-white text-lg font-medium rounded-xl shadow-md hover:bg-fuchsia-700 hover:shadow-lg transition-all duration-300 ease-in-out">
+                📝 View All Notes
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

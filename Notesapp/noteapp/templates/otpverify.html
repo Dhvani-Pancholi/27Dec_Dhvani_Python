@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}OTP{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    {% if msg %}
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    {% endif %}
+    <h1 style="text-align: center;">Verify OTP</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Verify Your OTP</label>
+          <input type="number" name="otp" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your otp with anyone else.</div>
+        </div>
+        <button type="submit" class="btn btn-danger">Verify</button>
+      </form>
+</div>
+{% endblock %}
+
