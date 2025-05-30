@@ -1,0 +1,1 @@
+raj: {'Contact_no': '9909560358', 'Address': 'ottawa ontario', 'Days': 1, 'Room_type': 'g', 'Room_no': 1, 'Check_in_date': '3/4/25', 'Check_out_date': '4/4/25', 'Payment_type': 'c'}
