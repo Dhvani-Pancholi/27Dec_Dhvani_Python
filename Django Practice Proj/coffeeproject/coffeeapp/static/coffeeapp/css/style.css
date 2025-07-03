@@ -1,0 +1,119 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Coffee Item Card */
+.coffee-item {
+    margin-bottom: 20px;
+}
+
+.coffee-item img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.coffee-item .card-title {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.coffee-item .price {
+    color: #e67e22;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Cart Styles */
+.cart-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Form Styles */
+.form-control:focus {
+    border-color: #e67e22;
+    box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+}
+
+.btn-primary {
+    background-color: #e67e22;
+    border-color: #e67e22;
+}
+
+.btn-primary:hover {
+    background-color: #d35400;
+    border-color: #d35400;
+}
+
+/* Order History */
+.order-card {
+    margin-bottom: 20px;
+}
+
+.order-status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+.status-pending {
+    background-color: #f1c40f;
+    color: #fff;
+}
+
+.status-processing {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.status-completed {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.status-cancelled {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+/* Profile Page */
+.profile-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .coffee-item img {
+        height: 150px;
+    }
+    
+    .cart-item {
+        padding: 10px;
+    }
+} 

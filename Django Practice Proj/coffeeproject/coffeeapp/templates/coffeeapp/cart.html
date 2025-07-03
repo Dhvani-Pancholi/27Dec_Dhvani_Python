@@ -1,0 +1,97 @@
+{% extends 'coffeeapp/base.html' %}
+{% load static %}
+{% load coffee_filters %}
+
+{% block title %}Shopping Cart - Coffee Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-5">Shopping Cart</h1>
+
+    {% if cart_items %}
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Cart Items -->
+            <div class="card">
+                <div class="card-body">
+                    {% for item in cart_items %}
+                    <div class="cart-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <img src="{{ item.coffee_item.image.url }}" alt="{{ item.coffee_item.name }}" class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="mb-0">{{ item.coffee_item.name }}</h5>
+                                <p class="text-muted mb-0">{{ item.coffee_item.description|truncatewords:10 }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity({{ item.id }}, -1)">-</button>
+                                    <span class="btn btn-sm btn-outline-primary" id="quantity-{{ item.id }}">{{ item.quantity }}</span>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity({{ item.id }}, 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <p class="price mb-0">${{ item.coffee_item.price }}</p>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Subtotal</span>
+                        <span>${{ total }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Tax (10%)</span>
+                        <span>${{ total|multiply:0.1 }}</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-3">
+                        <strong>Total</strong>
+                        <strong>${{ total|add:total|multiply:0.1 }}</strong>
+                    </div>
+                    <a href="{% url 'place_order' %}" class="btn btn-primary w-100">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center">
+        <h3>Your cart is empty</h3>
+        <p>Add some delicious coffee to your cart!</p>
+        <a href="{% url 'menu' %}" class="btn btn-primary">View Menu</a>
+    </div>
+    {% endif %}
+</div>
+
+{% block extra_js %}
+<script>
+function updateQuantity(itemId, change) {
+    const quantityElement = document.querySelector(`#quantity-${itemId}`);
+    const currentQuantity = parseInt(quantityElement.textContent);
+    const newQuantity = currentQuantity + change;
+    
+    if (newQuantity > 0) {
+        // You can add AJAX call here to update the quantity in the backend
+        quantityElement.textContent = newQuantity;
+    }
+}
+</script>
+{% endblock %}
+{% endblock %} 

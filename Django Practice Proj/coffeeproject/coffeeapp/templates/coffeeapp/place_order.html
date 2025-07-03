@@ -1,0 +1,97 @@
+{% extends 'coffeeapp/base.html' %}
+{% load static %}
+{% load coffee_filters %}
+
+{% block title %}Place Order - Coffee Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Order Summary -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="mb-0">Order Summary</h4>
+                </div>
+                <div class="card-body">
+                    {% for item in cart_items %}
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h6 class="mb-0">{{ item.coffee_item.name }}</h6>
+                            <small class="text-muted">Quantity: {{ item.quantity }}</small>
+                        </div>
+                        <span>${{ item.coffee_item.price|multiply:item.quantity }}</span>
+                    </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Total</strong>
+                        <strong>${{ total }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shipping Information -->
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Shipping Information</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="order-form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_shipping_address" class="form-label">Shipping Address</label>
+                            {{ form.shipping_address }}
+                            {{ form.shipping_address.errors }}
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Place Order</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Confirmation -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Order Confirmation</h4>
+                </div>
+                <div class="card-body">
+                    <p>Please review your order details before confirming:</p>
+                    <ul class="list-unstyled">
+                        <li>✓ Items: {{ cart_items|length }}</li>
+                        <li>✓ Total Amount: ${{ total }}</li>
+                        <li>✓ Shipping Address: Your provided address</li>
+                    </ul>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        You will receive an email confirmation once your order is placed.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add Bootstrap classes to form fields
+    const formFields = document.querySelectorAll('textarea');
+    formFields.forEach(field => {
+        field.classList.add('form-control');
+    });
+
+    // Form validation
+    const form = document.getElementById('order-form');
+    form.addEventListener('submit', function(e) {
+        if (!validateForm('order-form')) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+{% endblock %}
+{% endblock %} 

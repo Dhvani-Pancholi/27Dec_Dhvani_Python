@@ -1,0 +1,90 @@
+{% extends 'coffeeapp/base.html' %}
+{% load static %}
+
+{% block title %}My Orders - Coffee Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-5">My Orders</h1>
+
+    {% if orders %}
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-md-6 mb-4">
+            <div class="card order-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Order #{{ order.id }}</h5>
+                    <span class="order-status status-{{ order.status }}">{{ order.status|title }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>Date:</strong> {{ order.created_at|date:"F j, Y" }}</p>
+                            <p class="mb-1"><strong>Time:</strong> {{ order.created_at|time:"g:i A" }}</p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <p class="mb-1"><strong>Total Amount:</strong> ${{ order.total_amount }}</p>
+                            <p class="mb-0"><strong>Items:</strong> {{ order.items.count }}</p>
+                        </div>
+                    </div>
+
+                    <div class="order-items">
+                        {% for order_item in order.orderitem_set.all %}
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <h6 class="mb-0">{{ order_item.coffee_item.name }}</h6>
+                                <small class="text-muted">Quantity: {{ order_item.quantity }}</small>
+                            </div>
+                            <span>${{ order_item.price }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mt-3">
+                        <p class="mb-1"><strong>Shipping Address:</strong></p>
+                        <p class="mb-0">{{ order.shipping_address }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center">
+        <h3>No orders yet</h3>
+        <p>Start shopping to see your orders here!</p>
+        <a href="{% url 'menu' %}" class="btn btn-primary">View Menu</a>
+    </div>
+    {% endif %}
+</div>
+
+{% block extra_css %}
+<style>
+.order-status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+.status-pending {
+    background-color: #f1c40f;
+    color: #fff;
+}
+
+.status-processing {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.status-completed {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.status-cancelled {
+    background-color: #e74c3c;
+    color: #fff;
+}
+</style>
+{% endblock %}
+{% endblock %} 

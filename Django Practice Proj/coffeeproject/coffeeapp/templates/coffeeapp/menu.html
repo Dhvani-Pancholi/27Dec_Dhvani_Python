@@ -1,0 +1,109 @@
+{% extends 'coffeeapp/base.html' %}
+{% load static %}
+
+{% block title %}Menu - Coffee Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-5">Our Menu</h1>
+
+    <!-- Search and Filter Section -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search coffee..." id="searchInput">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group float-end">
+                <button class="btn btn-outline-primary active" data-filter="all">All</button>
+                <!-- <button class="btn btn-outline-primary" data-filter="hot">Hot Coffee</button>
+                <button class="btn btn-outline-primary" data-filter="cold">Cold Coffee</button> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Items -->
+    <div class="row" id="menuItems">
+        {% for item in coffee_items %}
+        <div class="col-md-4 mb-4 menu-item" data-category="{{ item.category }}">
+            <div class="card coffee-item h-100">
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <p class="price">${{ item.price }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity({{ item.id }}, -1)">-</button>
+                            <span class="btn btn-sm btn-outline-primary" id="quantity-{{ item.id }}">1</span>
+                            <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity({{ item.id }}, 1)">+</button>
+                        </div>
+                        <a href="{% url 'add_to_cart' item.id %}" class="btn btn-primary" onclick="addToCartAnimation(this)">
+                            Add to Cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- No Results Message -->
+    <div id="noResults" class="text-center d-none">
+        <h3>No items found</h3>
+        <p>Try adjusting your search or filter criteria</p>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const menuItems = document.querySelectorAll('.menu-item');
+    const noResults = document.getElementById('noResults');
+    const filterButtons = document.querySelectorAll('[data-filter]');
+
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        let hasResults = false;
+
+        menuItems.forEach(item => {
+            const title = item.querySelector('.card-title').textContent.toLowerCase();
+            const description = item.querySelector('.card-text').textContent.toLowerCase();
+            const isVisible = title.includes(searchTerm) || description.includes(searchTerm);
+            
+            item.style.display = isVisible ? 'block' : 'none';
+            if (isVisible) hasResults = true;
+        });
+
+        noResults.classList.toggle('d-none', hasResults);
+    });
+
+    // Filter functionality
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const filter = this.dataset.filter;
+            
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+
+            // Filter items
+            menuItems.forEach(item => {
+                if (filter === 'all' || item.dataset.category === filter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}
+{% endblock %} 
